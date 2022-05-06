@@ -1,0 +1,161 @@
+body {
+  font-family: fantasy;
+  font-size: 18px;
+  background-image: url(imgs/background.jpg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.container {
+  color: white;
+  margin: auto;
+  max-width: 1600px;
+}
+
+header {
+  font-size: 3em;
+  text-align: center;
+}
+
+.textHeader {
+  font-size: 1em;
+}
+
+h2 {
+  font-size: 2em;
+}
+
+h3 {
+  font-size: 1em;
+}
+
+.name {
+  text-align: center;
+}
+
+.descriptions {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: rgb(220, 220, 220, 0.4);
+  border-radius: 20px;
+  display: flex;
+  width: 100%;
+}
+
+.fighterPhoto {
+  background-color: rgb(224, 117, 29, 0.7);
+  width: 33.33%;
+  height: 350px;
+  margin: 20px;
+  box-sizing: border-box;
+  border: 3px solid rgb(37, 3, 10);
+  border-radius: 5px;
+}
+
+.mainMenuButton {
+  margin: 10px auto;
+  display: block;
+  min-width: 100px;
+  height: 40px;
+  font-weight: bold;
+  background-color: rgb(165, 42, 42);
+  color: whitesmoke;
+  font-family: inherit;
+  padding: 10px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.mainMenuButton:hover {
+  background: rgb(165, 42, 42, 0.7);
+  cursor: pointer;
+}
+
+/* fightArena style */
+.instruction {
+  font-size: 2em;
+  text-align: left;
+}
+
+.icons {
+  background-color: aquamarine;
+  display: flex;
+  justify-content: space-between;
+  padding: 25px;
+  margin: 25px;
+}
+
+.icons p {
+  font-size: 100px;
+  margin: 25px;
+}
+
+.iconCharacter {
+  width: 25%;
+  background-color: brown;
+}
+.iconCharacter2 {
+  width: 25%;
+  background-color: blue;
+}
+
+.arenaZone {
+  background-color: black;
+  margin: 25px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.yourBody {
+  margin-left: 15px;
+  width: 30%;
+}
+
+.yourBody .head {
+  background-color: green;
+  height: 100px;
+}
+.yourBody .body {
+  background-color: crimson;
+  height: 100px;
+}
+.yourBody .foot {
+  background-color: blueviolet;
+  height: 100px;
+}
+
+.enemyBody {
+  margin-right: 15px;
+  width: 30%;
+}
+
+.enemyBody .head {
+  background-color: green;
+  height: 100px;
+}
+.enemyBody .body {
+  background-color: crimson;
+  height: 100px;
+}
+.enemyBody .foot {
+  background-color: blueviolet;
+  height: 100px;
+}
+
+.arenaButton button {
+  margin: 10px auto;
+  display: block;
+  width: 100px;
+  height: 50px;
+  background-color: rgb(165, 42, 42);
+  color: whitesmoke;
+  font-family: inherit;
+}
+
+.arenaButton button:hover {
+  background: rgb(165, 42, 42, 0.7);
+  cursor: pointer;
+}
