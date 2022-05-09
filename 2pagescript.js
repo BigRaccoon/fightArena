@@ -1,77 +1,123 @@
 const enemyBody = document.querySelector(".enemyBody");
 const playerBody = document.querySelector(".yourBody");
-const enemyHP = document.querySelector("#enHP");
-const playerHP = document.querySelector("#plHP");
 const accept = document.querySelector(".arenaButton");
 
-warriorClass = {
+let playerChooseP, playerChooseA;
+const warriorClass = {
   name: "warrior",
   hp: 3,
   power: 1,
 };
 
-let enemy = warriorClass.hp;
-let player = warriorClass.hp;
+const phrases = {
+  enemy: {
+    onKick: "",
+  },
+  player: {
+    onKick: "",
+  },
+};
+console.log("Аха");
+class Choice {
+  constructor(type, tag, fighter) {
+    this.lastPickedTag = {
+      tag: undefined,
+      color: undefined,
+    };
+    this.type = type; // TODO add phrases
+    this.tag = tag;
+    this.hpTag = this.getHpTag();
+    this.setFighter(fighter);
+    this.setOnClickListeners();
+  }
 
-enemyHP.innerHTML = `Health: ${enemy}`;
-playerHP.innerHTML = `Health: ${player}`;
+  setOnClickListeners() {
+    this.selectArea = this.selectArea.bind(this);
+    this.tag.addEventListener("click", this.selectArea);
+  }
 
-// Выбор куда бить
-let playerChooseA;
-enemyBody.addEventListener("click", function () {
-  playerChooseA = event.target.innerHTML;
-  colorA = event.target.style.backgroundColor;
-  console.log("Целимся в " + event.target.innerHTML);
-  //event.target.style.backgroundColor = "orange";
-});
-//Выбор места защиты
-let playerChooseP;
-playerBody.addEventListener("click", function () {
-  colorP = event.target.style.backgroundColor;
-  playerChooseP = event.target.innerHTML;
-  console.log("Готовимся защищать " + event.target.innerHTML);
-  //event.target.style.backgroundColor = "yellow";
-});
+  selectArea($event) {
+    if ($event.target.classList.contains("hp")) {
+      return;
+    }
+    if (this.lastPickedTag.tag) {
+      this.lastPickedTag.tag.style.backgroundColor = this.lastPickedTag.color;
+    }
+    this.lastPickedTag.tag = $event.target;
+    this.lastPickedTag.color = $event.target.style.backgroundColor;
+    this.picked = $event.target.innerHTML;
+    // console.log("Готовимся защищать " + $event.target.innerHTML);
+    $event.target.style.backgroundColor = "yellow";
+  }
 
-//Проверка событий
+  setFighter(fighter) {
+    this.fighter = fighter;
+    this.setHp(this.fighter.hp);
+  }
+
+  increaseHp(dx) {
+    this.setHp(this.hp + dx);
+  }
+
+  setHp(hp) {
+    this.hp = hp;
+    this.setHpText(this.hp);
+  }
+
+  setHpText(hp) {
+    this.hpTag.innerHTML = `Health: ${hp}`;
+  }
+
+  getPicked() {
+    return this.picked;
+  }
+
+  resetPicked() {
+    this.picked = undefined;
+  }
+
+  getHpTag() {
+    return this.tag.querySelector(".hp");
+  }
+}
+
+const player = new Choice("PLAYER", playerBody, warriorClass);
+const enemy = new Choice("ENEMY", enemyBody, warriorClass);
+
 accept.addEventListener("click", function () {
-  console.log(warriorClass.hp);
-  if (playerChooseP && playerChooseA) {
-    enAt = enemyAttack();
-    console.log("Враг атакует в " + enAt);
-    if (enAt != playerChooseP) {
-      player -= 1;
-      playerHP.innerHTML = `Health: ${player}`;
-      playerChooseP = undefined;
+  console.log(player, player.getPicked(), enemy.getPicked());
+  if (player.getPicked() && enemy.getPicked()) {
+    const targetEnemyAttack = pickTargetOfEnemy();
+    console.log("Враг атакует в " + targetEnemyAttack);
+    if (targetEnemyAttack != player.getPicked()) {
+      player.increaseHp(-1);
+      player.resetPicked();
     }
     checkDeath(player, "losling :(((");
-    // проверка на попадание через защиту врага
-    let check = getProtectionEnemy();
+    const check = getProtectionEnemy();
     console.log("враг защищает свой " + check);
     if (playerChooseA != check) {
-      enemy -= 1;
-      enemyHP.innerHTML = `Health: ${enemy}`;
+      enemy.increaseHp(-1);
     }
-    checkDeath(enemy, "You win!!!");
-    if (enemy == 0 && player == 0) {
+    checkDeath(enemy.hp, "You win!!!");
+    if (enemy.hp == 0 && player.hp == 0) {
       setTimeout(() => {
         alert("Произошел троллинг!!!");
       }, 500);
     }
   }
 });
-// Функции
-let protection = ["head", "body", "foot"];
-function getProtectionEnemy() {
-  return protection[getRandomInt(protection.length)];
+
+const targets = ["head", "body", "foot"];
+
+function pickTargetOfEnemy() {
+  return randomChoice(targets);
 }
 
-function enemyAttack() {
-  return getProtectionEnemy();
+function getProtectionEnemy() {
+  return randomChoice(targets);
 }
-function getRandomInt(max) {
-  return Math.floor(Math.random() * max);
-}
+
 function restart() {
   setTimeout(() => {
     window.location.href = "index.html";
@@ -85,4 +131,12 @@ function checkDeath(person, phrase) {
     }, 500);
     restart();
   }
+}
+
+function randomChoice(array) {
+  return array[getRandomInt(array.length)];
+}
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
 }
