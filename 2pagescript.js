@@ -1,3 +1,5 @@
+import { playerFighter } from "./scripts";
+console.log(playerFighter);
 const enemyBody = document.querySelector(".enemyBody");
 const playerBody = document.querySelector(".yourBody");
 const accept = document.querySelector(".arenaButton");
@@ -9,15 +11,15 @@ const warriorClass = {
   power: 1,
 };
 
-const phrases = {
-  enemy: {
-    onKick: "",
-  },
-  player: {
-    onKick: "",
-  },
-};
-console.log("Аха");
+// const phrases = {
+//   enemy: {
+//     onKick: "",
+//   },
+//   player: {
+//     onKick: "",
+//   },
+// };
+
 class Choice {
   constructor(type, tag, fighter) {
     this.lastPickedTag = {
@@ -81,7 +83,7 @@ class Choice {
   }
 }
 
-const player = new Choice("PLAYER", playerBody, warriorClass);
+const player = new Choice("PLAYER", playerBody, playerFighter);
 const enemy = new Choice("ENEMY", enemyBody, warriorClass);
 
 accept.addEventListener("click", function () {

@@ -1,18 +1,9 @@
 // const { warriorClass, berserkClass, wizzardClass } =
 //   require("./classes.js").default;
-// Classes.js
-// class Fighter {
-//   constructor(name, hp, attack) {
-//     this.name = name;
-//     this.hp = hp;
-//     this.attack = attack;
-//   }
-// }
 
-// const warriorClass = new Fighter("warrior", 3, 1);
-// const berserkClass = new Fighter("berserk", 1, 2);
-// const wizzardClass = new Fighter("wizzard", 2, 1);
-// console.log(warriorClass);
+import { warriorClass, berserkClass, wizzardClass } from "./classes.js";
+
+console.log(warriorClass);
 
 //Переход между страницами
 const firstPageBtn = document.querySelector(".mainMenuButton");
@@ -29,26 +20,79 @@ const berserk = document.querySelector("#berserk");
 const wizzard = document.querySelector("#wizzard");
 
 //Переменная которая хранит бойца
+
+//choosingFighter(warrior);
+// choosingFighter(berserk);
+// choosingFighter(wizzard);
 let playerFighter;
+warrior.addEventListener("click", function () {
+  // console.log(playerFighter);
+  // playerFighter = event.target.id;
+  // console.log(playerFighter);
+  // alert(`Вы выбрали класс: ${playerFighter}`);
+  // playerFighter = warriorClass;
+  // console.log(playerFighter);
+  shortChange(warriorClass);
+});
 
-choosingFighter(warrior);
-choosingFighter(berserk);
-choosingFighter(wizzard);
+berserk.addEventListener("click", function () {
+  // console.log(playerFighter);
+  // playerFighter = event.target.id;
+  // console.log(playerFighter);
+  // alert(`Вы выбрали класс: ${playerFighter}`);
+  // playerFighter = warriorClass;
+  // console.log(playerFighter);
+  shortChange(berserkClass);
+});
 
-function choosingFighter(fighterClass) {
-  fighterClass.addEventListener("click", function () {
-    playerFighter = fighterClass.id;
-    console.log(playerFighter);
-    alert(`Вы выбрали класс: ${playerFighter}`);
-  });
+wizzard.addEventListener("click", function () {
+  // console.log(playerFighter);
+  // playerFighter = event.target.id;
+  // console.log(playerFighter);
+  // alert(`Вы выбрали класс: ${playerFighter}`);
+  // playerFighter = warriorClass;
+  // console.log(playerFighter);
+  shortChange(wizzardClass);
+});
+
+// berserk.addEventListener("click", function () {
+//   playerFighter = event.target.id;
+//   console.log(playerFighter);
+//   alert(`Вы выбрали класс: ${playerFighter}`);
+//   playerFighter = berserkClass;
+// });
+// wizzard.addEventListener("click", function () {
+//   playerFighter = event.target.id;
+//   console.log(playerFighter);
+//   alert(`Вы выбрали класс: ${playerFighter}`);
+//   playerFighter = wizzardClass;
+// });
+
+function shortChange(classFighter) {
+  playerFighter = event.target.id;
+  console.log(playerFighter);
+  alert(`Вы выбрали класс: ${playerFighter}`);
+  playerFighter = classFighter;
+  console.log(playerFighter);
 }
-
-if (playerFighter == "warrior") {
-  playerFighter = warriorClass;
-} else if (playerFighter == "berserk") {
-  playerFighter = berserkClass;
-} else if (playerFighter == "wizzard") {
-  playerFighter = wizzardClass;
-} else {
-  console.log("Что-то пошло не так?");
-}
+export { playerFighter };
+// function choosingFighter(fighterClass) {
+//   fighterClass.addEventListener("click", function () {
+//     playerFighter = event.target.id;
+//     console.log(playerFighter);
+//     alert(`Вы выбрали класс: ${playerFighter}`);
+//   });
+// }
+// console.log(playerFighter);
+// if (playerFighter == warriorClass.name) {
+//   playerFighter = warriorClass;
+//   console.log(playerFighter);
+// } else if (playerFighter == "berserk") {
+//   playerFighter = berserkClass;
+//   console.log(playerFighter);
+// } else if (playerFighter == "wizzard") {
+//   playerFighter = wizzardClass;
+//   console.log(playerFighter);
+// } else {
+//   console.log("Что-то пошло не так?");
+// }
