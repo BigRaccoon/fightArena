@@ -166,56 +166,26 @@ firstPageBtn.addEventListener("click", function () {
   if (playerFighter) {
     window.location.href = "fightArena.html";
   }
-}); //Выбор бойца
-
+});
 var fighters = document.querySelectorAll(".fighterPhoto");
 var warrior = document.querySelector("#warrior");
 var berserk = document.querySelector("#berserk");
-var wizzard = document.querySelector("#wizzard"); //Переменная которая хранит бойца
-//choosingFighter(warrior);
-// choosingFighter(berserk);
-// choosingFighter(wizzard);
+var wizzard = document.querySelector("#wizzard");
+var weather = document.querySelector(".weatherInfo");
+var wind = document.querySelector(".windInfo"); //Выбор бойца
+//Переменная которая хранит бойца
 
 var playerFighter;
 exports.playerFighter = playerFighter;
 warrior.addEventListener("click", function () {
-  // console.log(playerFighter);
-  // playerFighter = event.target.id;
-  // console.log(playerFighter);
-  // alert(`Вы выбрали класс: ${playerFighter}`);
-  // playerFighter = warriorClass;
-  // console.log(playerFighter);
   shortChange(_classes.warriorClass);
 });
 berserk.addEventListener("click", function () {
-  // console.log(playerFighter);
-  // playerFighter = event.target.id;
-  // console.log(playerFighter);
-  // alert(`Вы выбрали класс: ${playerFighter}`);
-  // playerFighter = warriorClass;
-  // console.log(playerFighter);
   shortChange(_classes.berserkClass);
 });
 wizzard.addEventListener("click", function () {
-  // console.log(playerFighter);
-  // playerFighter = event.target.id;
-  // console.log(playerFighter);
-  // alert(`Вы выбрали класс: ${playerFighter}`);
-  // playerFighter = warriorClass;
-  // console.log(playerFighter);
   shortChange(_classes.wizzardClass);
-}); // berserk.addEventListener("click", function () {
-//   playerFighter = event.target.id;
-//   console.log(playerFighter);
-//   alert(`Вы выбрали класс: ${playerFighter}`);
-//   playerFighter = berserkClass;
-// });
-// wizzard.addEventListener("click", function () {
-//   playerFighter = event.target.id;
-//   console.log(playerFighter);
-//   alert(`Вы выбрали класс: ${playerFighter}`);
-//   playerFighter = wizzardClass;
-// });
+});
 
 function shortChange(classFighter) {
   exports.playerFighter = playerFighter = event.target.id;
@@ -223,26 +193,22 @@ function shortChange(classFighter) {
   alert("\u0412\u044B \u0432\u044B\u0431\u0440\u0430\u043B\u0438 \u043A\u043B\u0430\u0441\u0441: ".concat(playerFighter));
   exports.playerFighter = playerFighter = classFighter;
   console.log(playerFighter);
-} // function choosingFighter(fighterClass) {
-//   fighterClass.addEventListener("click", function () {
-//     playerFighter = event.target.id;
-//     console.log(playerFighter);
-//     alert(`Вы выбрали класс: ${playerFighter}`);
-//   });
-// }
-// console.log(playerFighter);
-// if (playerFighter == warriorClass.name) {
-//   playerFighter = warriorClass;
-//   console.log(playerFighter);
-// } else if (playerFighter == "berserk") {
-//   playerFighter = berserkClass;
-//   console.log(playerFighter);
-// } else if (playerFighter == "wizzard") {
-//   playerFighter = wizzardClass;
-//   console.log(playerFighter);
-// } else {
-//   console.log("Что-то пошло не так?");
-// }
+}
+
+function weatherInfo() {
+  var urlWeather = "https://api.openweathermap.org/data/2.5/weather?id=1835847&appid=80848d57bcc832eae6ba82dfc0786c99";
+  fetch(urlWeather).then(function (resp) {
+    return resp.json();
+  }).then(function (data) {
+    console.log(data);
+    weather.innerHTML = "Now is ".concat(Math.round(data.main.temp - 273.15), " Celcius ");
+    wind.innerHTML = "Wind speed: ".concat(Math.round(data.wind.speed), " m/s  Visibility: ").concat(Math.round(data.visibility / 1000), " km");
+  }).catch(function () {});
+}
+
+window.onload = function () {
+  weatherInfo();
+};
 },{"./classes.js":"classes.js"}],"2pagescript.js":[function(require,module,exports) {
 "use strict";
 
@@ -444,7 +410,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65262" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58762" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

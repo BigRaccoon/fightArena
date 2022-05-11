@@ -13,60 +13,29 @@ firstPageBtn.addEventListener("click", () => {
   }
 });
 
-//Выбор бойца
 const fighters = document.querySelectorAll(".fighterPhoto");
 const warrior = document.querySelector("#warrior");
 const berserk = document.querySelector("#berserk");
 const wizzard = document.querySelector("#wizzard");
+const weather = document.querySelector(".weatherInfo");
+const wind = document.querySelector(".windInfo");
 
+//Выбор бойца
 //Переменная которая хранит бойца
 
-//choosingFighter(warrior);
-// choosingFighter(berserk);
-// choosingFighter(wizzard);
 let playerFighter;
+
 warrior.addEventListener("click", function () {
-  // console.log(playerFighter);
-  // playerFighter = event.target.id;
-  // console.log(playerFighter);
-  // alert(`Вы выбрали класс: ${playerFighter}`);
-  // playerFighter = warriorClass;
-  // console.log(playerFighter);
   shortChange(warriorClass);
 });
 
 berserk.addEventListener("click", function () {
-  // console.log(playerFighter);
-  // playerFighter = event.target.id;
-  // console.log(playerFighter);
-  // alert(`Вы выбрали класс: ${playerFighter}`);
-  // playerFighter = warriorClass;
-  // console.log(playerFighter);
   shortChange(berserkClass);
 });
 
 wizzard.addEventListener("click", function () {
-  // console.log(playerFighter);
-  // playerFighter = event.target.id;
-  // console.log(playerFighter);
-  // alert(`Вы выбрали класс: ${playerFighter}`);
-  // playerFighter = warriorClass;
-  // console.log(playerFighter);
   shortChange(wizzardClass);
 });
-
-// berserk.addEventListener("click", function () {
-//   playerFighter = event.target.id;
-//   console.log(playerFighter);
-//   alert(`Вы выбрали класс: ${playerFighter}`);
-//   playerFighter = berserkClass;
-// });
-// wizzard.addEventListener("click", function () {
-//   playerFighter = event.target.id;
-//   console.log(playerFighter);
-//   alert(`Вы выбрали класс: ${playerFighter}`);
-//   playerFighter = wizzardClass;
-// });
 
 function shortChange(classFighter) {
   playerFighter = event.target.id;
@@ -75,24 +44,28 @@ function shortChange(classFighter) {
   playerFighter = classFighter;
   console.log(playerFighter);
 }
+
+function weatherInfo() {
+  let urlWeather = `https://api.openweathermap.org/data/2.5/weather?id=1835847&appid=80848d57bcc832eae6ba82dfc0786c99`;
+
+  fetch(urlWeather)
+    .then(function (resp) {
+      return resp.json();
+    })
+    .then(function (data) {
+      console.log(data);
+      weather.innerHTML = `Now is ${Math.round(
+        data.main.temp - 273.15
+      )} Celcius `;
+      wind.innerHTML = `Wind speed: ${Math.round(
+        data.wind.speed
+      )} m/s  Visibility: ${Math.round(data.visibility / 1000)} km`;
+    })
+    .catch(function () {});
+}
+
+window.onload = function () {
+  weatherInfo();
+};
+
 export { playerFighter };
-// function choosingFighter(fighterClass) {
-//   fighterClass.addEventListener("click", function () {
-//     playerFighter = event.target.id;
-//     console.log(playerFighter);
-//     alert(`Вы выбрали класс: ${playerFighter}`);
-//   });
-// }
-// console.log(playerFighter);
-// if (playerFighter == warriorClass.name) {
-//   playerFighter = warriorClass;
-//   console.log(playerFighter);
-// } else if (playerFighter == "berserk") {
-//   playerFighter = berserkClass;
-//   console.log(playerFighter);
-// } else if (playerFighter == "wizzard") {
-//   playerFighter = wizzardClass;
-//   console.log(playerFighter);
-// } else {
-//   console.log("Что-то пошло не так?");
-// }
