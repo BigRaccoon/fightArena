@@ -117,15 +117,110 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"2pagescript.js":[function(require,module,exports) {
+})({"classes.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.wizzardClass = exports.warriorClass = exports.berserkClass = void 0;
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Fighter = /*#__PURE__*/_createClass(function Fighter(name, hp, power) {
+  _classCallCheck(this, Fighter);
+
+  this.name = name;
+  this.hp = hp;
+  this.power = power;
+});
+
+var warriorClass = new Fighter("warrior", 3, 1);
+exports.warriorClass = warriorClass;
+var berserkClass = new Fighter("berserk", 1, 2);
+exports.berserkClass = berserkClass;
+var wizzardClass = new Fighter("wizzard", 2, 1); //console.log(warriorClass);
+// module.exports = { warriorClass, berserkClass, wizzardClass };
+
+exports.wizzardClass = wizzardClass;
+},{}],"scripts.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.playerFighter = void 0;
+
+var _classes = require("./classes.js");
+
+// const { warriorClass, berserkClass, wizzardClass } =
+//   require("./classes.js").default;
+console.log(_classes.warriorClass); //Переход между страницами
+
+var firstPageBtn = document.querySelector(".mainMenuButton");
+firstPageBtn.addEventListener("click", function () {
+  if (playerFighter) {
+    window.location.href = "fightArena.html";
+  }
+});
+var fighters = document.querySelectorAll(".fighterPhoto");
+var warrior = document.querySelector("#warrior");
+var berserk = document.querySelector("#berserk");
+var wizzard = document.querySelector("#wizzard");
+var weather = document.querySelector(".weatherInfo");
+var wind = document.querySelector(".windInfo"); //Выбор бойца
+//Переменная которая хранит бойца
+
+var playerFighter;
+exports.playerFighter = playerFighter;
+warrior.addEventListener("click", function () {
+  shortChange(_classes.warriorClass);
+});
+berserk.addEventListener("click", function () {
+  shortChange(_classes.berserkClass);
+});
+wizzard.addEventListener("click", function () {
+  shortChange(_classes.wizzardClass);
+});
+
+function shortChange(classFighter) {
+  exports.playerFighter = playerFighter = event.target.id;
+  console.log(playerFighter);
+  alert("\u0412\u044B \u0432\u044B\u0431\u0440\u0430\u043B\u0438 \u043A\u043B\u0430\u0441\u0441: ".concat(playerFighter));
+  exports.playerFighter = playerFighter = classFighter;
+  console.log(playerFighter);
+}
+
+function weatherInfo() {
+  var urlWeather = "https://api.openweathermap.org/data/2.5/weather?id=1835847&appid=80848d57bcc832eae6ba82dfc0786c99";
+  fetch(urlWeather).then(function (resp) {
+    return resp.json();
+  }).then(function (data) {
+    console.log(data);
+    weather.innerHTML = "Now is ".concat(Math.round(data.main.temp - 273.15), " Celcius ");
+    wind.innerHTML = "Wind speed: ".concat(Math.round(data.wind.speed), " m/s  Visibility: ").concat(Math.round(data.visibility / 1000), " km");
+  }).catch(function () {});
+}
+
+window.onload = function () {
+  weatherInfo();
+};
+},{"./classes.js":"classes.js"}],"2pagescript.js":[function(require,module,exports) {
+"use strict";
+
+var _scripts = require("./scripts");
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 
-// import { playerFighter } from "./scripts.js";
-// console.log(playerFighter);
+console.log(_scripts.playerFighter);
 var enemyBody = document.querySelector(".enemyBody");
 var playerBody = document.querySelector(".yourBody");
 var accept = document.querySelector(".arenaButton");
@@ -224,7 +319,7 @@ var Choice = /*#__PURE__*/function () {
   return Choice;
 }();
 
-var player = new Choice("PLAYER", playerBody, playerFighter);
+var player = new Choice("PLAYER", playerBody, _scripts.playerFighter);
 var enemy = new Choice("ENEMY", enemyBody, warriorClass);
 accept.addEventListener("click", function () {
   console.log(player, player.getPicked(), enemy.getPicked());
@@ -287,7 +382,7 @@ function randomChoice(array) {
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
-},{}],"../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./scripts":"scripts.js"}],"../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -315,7 +410,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51338" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60834" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -492,4 +587,4 @@ function hmrAcceptRun(bundle, id) {
   }
 }
 },{}]},{},["../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","2pagescript.js"], null)
-//# sourceMappingURL=/2pagescript.8b1e2a30.js.map
+//# sourceMappingURL=/2pagescript.js.map

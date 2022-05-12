@@ -150,21 +150,25 @@ exports.wizzardClass = wizzardClass;
 },{}],"scripts.js":[function(require,module,exports) {
 "use strict";
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.playerFighter = void 0;
-
 var _classes = require("./classes.js");
 
-// const { warriorClass, berserkClass, wizzardClass } =
-//   require("./classes.js").default;
-console.log(_classes.warriorClass); //Переход между страницами
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+console.log(_classes.warriorClass);
+var namePlayer = prompt("Wha's your name?"); //Переход между страницами
 
 var firstPageBtn = document.querySelector(".mainMenuButton");
 firstPageBtn.addEventListener("click", function () {
   if (playerFighter) {
-    window.location.href = "fightArena.html";
+    // window.location.href = "./fightArena.html";
+    window.scroll({
+      top: 1000,
+      behavior: "smooth"
+    });
   }
 });
 var fighters = document.querySelectorAll(".fighterPhoto");
@@ -176,7 +180,8 @@ var wind = document.querySelector(".windInfo"); //Выбор бойца
 //Переменная которая хранит бойца
 
 var playerFighter;
-exports.playerFighter = playerFighter;
+var player;
+var playerChooseP, playerChooseA;
 warrior.addEventListener("click", function () {
   shortChange(_classes.warriorClass);
 });
@@ -187,13 +192,20 @@ wizzard.addEventListener("click", function () {
   shortChange(_classes.wizzardClass);
 });
 
+window.onload = function () {
+  weatherInfo();
+};
+
 function shortChange(classFighter) {
-  exports.playerFighter = playerFighter = event.target.id;
+  playerFighter = event.target.id;
   console.log(playerFighter);
   alert("\u0412\u044B \u0432\u044B\u0431\u0440\u0430\u043B\u0438 \u043A\u043B\u0430\u0441\u0441: ".concat(playerFighter));
-  exports.playerFighter = playerFighter = classFighter;
+  playerFighter = classFighter;
   console.log(playerFighter);
+  player = new Choice("PLAYER", playerBody, playerFighter);
 }
+
+console.log(player);
 
 function weatherInfo() {
   var urlWeather = "https://api.openweathermap.org/data/2.5/weather?id=1835847&appid=80848d57bcc832eae6ba82dfc0786c99";
@@ -201,14 +213,162 @@ function weatherInfo() {
     return resp.json();
   }).then(function (data) {
     console.log(data);
-    weather.innerHTML = "Now is ".concat(Math.round(data.main.temp - 273.15), " Celcius ");
-    wind.innerHTML = "Wind speed: ".concat(Math.round(data.wind.speed), " m/s  Visibility: ").concat(Math.round(data.visibility / 1000), " km");
+    weather.innerHTML = "Now is ".concat(Math.round(data.main.temp - 273.15), " Celcius, ");
+    wind.innerHTML = "Wind speed: ".concat(Math.round(data.wind.speed), " m/s,  Visibility: ").concat(Math.round(data.visibility / 1000), " km");
   }).catch(function () {});
+} ///////////////////////////////////////////////
+
+
+var enemyBody = document.querySelector(".enemyBody");
+var playerBody = document.querySelector(".yourBody");
+var accept = document.querySelector(".arenaButton");
+var nameInArea = document.querySelector(".areaName");
+nameInArea.innerHTML = "".concat(namePlayer);
+
+var Choice = /*#__PURE__*/function () {
+  function Choice(type, tag, fighter) {
+    _classCallCheck(this, Choice);
+
+    this.lastPickedTag = {
+      tag: undefined,
+      color: undefined
+    };
+    this.type = type; // TODO add phrases
+
+    this.tag = tag;
+    this.hpTag = this.getHpTag();
+    this.setFighter(fighter);
+    this.setOnClickListeners();
+  }
+
+  _createClass(Choice, [{
+    key: "setOnClickListeners",
+    value: function setOnClickListeners() {
+      this.selectArea = this.selectArea.bind(this);
+      this.tag.addEventListener("click", this.selectArea);
+    }
+  }, {
+    key: "selectArea",
+    value: function selectArea($event) {
+      if ($event.target.classList.contains("hp")) {
+        return;
+      }
+
+      if (this.lastPickedTag.tag) {
+        this.lastPickedTag.tag.style.backgroundColor = this.lastPickedTag.color;
+      }
+
+      this.lastPickedTag.tag = $event.target;
+      this.lastPickedTag.color = $event.target.style.backgroundColor;
+      this.picked = $event.target.innerHTML; // console.log("Готовимся защищать " + $event.target.innerHTML);
+
+      $event.target.style.backgroundColor = "yellow";
+    }
+  }, {
+    key: "setFighter",
+    value: function setFighter(fighter) {
+      this.fighter = fighter;
+      this.setHp(this.fighter.hp);
+    }
+  }, {
+    key: "increaseHp",
+    value: function increaseHp(dx) {
+      this.setHp(this.hp + dx);
+    }
+  }, {
+    key: "setHp",
+    value: function setHp(hp) {
+      this.hp = hp;
+      this.setHpText(this.hp);
+    }
+  }, {
+    key: "setHpText",
+    value: function setHpText(hp) {
+      this.hpTag.innerHTML = "Health: ".concat(hp);
+    }
+  }, {
+    key: "getPicked",
+    value: function getPicked() {
+      return this.picked;
+    }
+  }, {
+    key: "resetPicked",
+    value: function resetPicked() {
+      this.picked = undefined;
+    }
+  }, {
+    key: "getHpTag",
+    value: function getHpTag() {
+      return this.tag.querySelector(".hp");
+    }
+  }]);
+
+  return Choice;
+}();
+
+var enemy = new Choice("ENEMY", enemyBody, _classes.warriorClass);
+accept.addEventListener("click", function () {
+  console.log(player);
+  console.log(player, player.getPicked(), enemy.getPicked());
+
+  if (player.getPicked() && enemy.getPicked()) {
+    var targetEnemyAttack = pickTargetOfEnemy();
+    console.log("Враг атакует в " + targetEnemyAttack);
+
+    if (targetEnemyAttack != player.getPicked()) {
+      player.increaseHp(-1);
+      player.resetPicked();
+    }
+
+    checkDeath(player.hp, "losling :(((");
+    var check = getProtectionEnemy();
+    console.log("враг защищает свой " + check);
+
+    if (playerChooseA != check) {
+      enemy.increaseHp(-1);
+    }
+
+    checkDeath(enemy.hp, "You win!!!");
+
+    if (enemy.hp == 0 && player.hp == 0) {
+      setTimeout(function () {
+        alert("Произошел троллинг!!!");
+      }, 500);
+    }
+  }
+});
+var targets = ["head", "body", "foot"];
+
+function pickTargetOfEnemy() {
+  return randomChoice(targets);
 }
 
-window.onload = function () {
-  weatherInfo();
-};
+function getProtectionEnemy() {
+  return randomChoice(targets);
+}
+
+function restart() {
+  setTimeout(function () {
+    window.location.href = "index.html";
+  }, 500);
+}
+
+function checkDeath(person, phrase) {
+  if (person == 0) {
+    setTimeout(function () {
+      alert(phrase);
+    }, 200);
+    restart();
+  }
+}
+
+function randomChoice(array) {
+  return array[getRandomInt(array.length)];
+}
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
 },{"./classes.js":"classes.js"}],"../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -237,7 +397,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50729" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51338" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -117,79 +117,99 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
-var bundleURL = null;
+})({"classes.js":[function(require,module,exports) {
+"use strict";
 
-function getBundleURLCached() {
-  if (!bundleURL) {
-    bundleURL = getBundleURL();
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.wizzardClass = exports.warriorClass = exports.berserkClass = void 0;
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Fighter = /*#__PURE__*/_createClass(function Fighter(name, hp, power) {
+  _classCallCheck(this, Fighter);
+
+  this.name = name;
+  this.hp = hp;
+  this.power = power;
+});
+
+var warriorClass = new Fighter("warrior", 3, 1);
+exports.warriorClass = warriorClass;
+var berserkClass = new Fighter("berserk", 1, 2);
+exports.berserkClass = berserkClass;
+var wizzardClass = new Fighter("wizzard", 2, 1); //console.log(warriorClass);
+// module.exports = { warriorClass, berserkClass, wizzardClass };
+
+exports.wizzardClass = wizzardClass;
+},{}],"scripts.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.playerFighter = void 0;
+
+var _classes = require("./classes.js");
+
+// const { warriorClass, berserkClass, wizzardClass } =
+//   require("./classes.js").default;
+console.log(_classes.warriorClass); //Переход между страницами
+
+var firstPageBtn = document.querySelector(".mainMenuButton");
+firstPageBtn.addEventListener("click", function () {
+  if (playerFighter) {
+    window.location.href = "fightArena.html";
   }
+});
+var fighters = document.querySelectorAll(".fighterPhoto");
+var warrior = document.querySelector("#warrior");
+var berserk = document.querySelector("#berserk");
+var wizzard = document.querySelector("#wizzard");
+var weather = document.querySelector(".weatherInfo");
+var wind = document.querySelector(".windInfo"); //Выбор бойца
+//Переменная которая хранит бойца
 
-  return bundleURL;
+var playerFighter;
+exports.playerFighter = playerFighter;
+warrior.addEventListener("click", function () {
+  shortChange(_classes.warriorClass);
+});
+berserk.addEventListener("click", function () {
+  shortChange(_classes.berserkClass);
+});
+wizzard.addEventListener("click", function () {
+  shortChange(_classes.wizzardClass);
+});
+
+function shortChange(classFighter) {
+  exports.playerFighter = playerFighter = event.target.id;
+  console.log(playerFighter);
+  alert("\u0412\u044B \u0432\u044B\u0431\u0440\u0430\u043B\u0438 \u043A\u043B\u0430\u0441\u0441: ".concat(playerFighter));
+  exports.playerFighter = playerFighter = classFighter;
+  console.log(playerFighter);
 }
 
-function getBundleURL() {
-  // Attempt to find the URL of the current script and use that as the base URL
-  try {
-    throw new Error();
-  } catch (err) {
-    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
-
-    if (matches) {
-      return getBaseURL(matches[0]);
-    }
-  }
-
-  return '/';
+function weatherInfo() {
+  var urlWeather = "https://api.openweathermap.org/data/2.5/weather?id=1835847&appid=80848d57bcc832eae6ba82dfc0786c99";
+  fetch(urlWeather).then(function (resp) {
+    return resp.json();
+  }).then(function (data) {
+    console.log(data);
+    weather.innerHTML = "Now is ".concat(Math.round(data.main.temp - 273.15), " Celcius ");
+    wind.innerHTML = "Wind speed: ".concat(Math.round(data.wind.speed), " m/s  Visibility: ").concat(Math.round(data.visibility / 1000), " km");
+  }).catch(function () {});
 }
 
-function getBaseURL(url) {
-  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)?\/[^/]+(?:\?.*)?$/, '$1') + '/';
-}
-
-exports.getBundleURL = getBundleURLCached;
-exports.getBaseURL = getBaseURL;
-},{}],"../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
-var bundle = require('./bundle-url');
-
-function updateLink(link) {
-  var newLink = link.cloneNode();
-
-  newLink.onload = function () {
-    link.remove();
-  };
-
-  newLink.href = link.href.split('?')[0] + '?' + Date.now();
-  link.parentNode.insertBefore(newLink, link.nextSibling);
-}
-
-var cssTimeout = null;
-
-function reloadCSS() {
-  if (cssTimeout) {
-    return;
-  }
-
-  cssTimeout = setTimeout(function () {
-    var links = document.querySelectorAll('link[rel="stylesheet"]');
-
-    for (var i = 0; i < links.length; i++) {
-      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
-        updateLink(links[i]);
-      }
-    }
-
-    cssTimeout = null;
-  }, 50);
-}
-
-module.exports = reloadCSS;
-},{"./bundle-url":"../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"style.css":[function(require,module,exports) {
-var reloadCSS = require('_css_loader');
-
-module.hot.dispose(reloadCSS);
-module.hot.accept(reloadCSS);
-},{"./imgs\\background.jpg":[["background.53df4c82.jpg","imgs/background.jpg"],"imgs/background.jpg"],"_css_loader":"../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+window.onload = function () {
+  weatherInfo();
+};
+},{"./classes.js":"classes.js"}],"../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -217,7 +237,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51338" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60834" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -393,5 +413,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js"], null)
-//# sourceMappingURL=/style.e308ff8e.js.map
+},{}]},{},["../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","scripts.js"], null)
+//# sourceMappingURL=/scripts.js.map

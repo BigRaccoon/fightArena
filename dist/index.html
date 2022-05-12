@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style.e308ff8e.css">
     <title>Gladiators</title>
+    <script src="/handlebars-v4.7.7.b41dc87a.js"></script>
   <script src="/style.e308ff8e.js"></script></head>
   <body>
     <div class="container">
@@ -18,8 +19,8 @@
             </tr>
             <tr>
               <td class="weatherInfo">data</td>
-              </tr><tr class="windInfo"><td>data</td></tr>
-            
+              <td class="windInfo">data</td>
+            </tr>
           </table>
         </div>
         <p class="textHeader">
@@ -78,6 +79,41 @@
       </div>
 
       <button class="mainMenuButton">Choose fighter</button>
+      <!-- ЖМЫХ АТАКА -->
+      <div class="instruction">
+        <p>
+          To fight, you need to choose the place of attack on the enemy, as well
+          as the place of protection on your fighter.
+        </p>
+      </div>
+      <div class="icons">
+        <div class="iconCharacter">
+          <img src="" alt="Your photo">
+          <h2 class="areaName">Your name</h2>
+        </div>
+        <p>VS</p>
+        <div class="iconCharacter2">
+          <img src="" alt="other photo">
+          <h2>Enemy</h2>
+        </div>
+      </div>
+      <div class="arenaZone">
+        <div class="yourBody">
+          <div id="pHead" class="head">head</div>
+          <div class="body">body</div>
+          <div class="foot">foot</div>
+          <div class="hp">Health:</div>
+        </div>
+        <div class="enemyBody">
+          <div id="eHead" class="head">head</div>
+          <div class="body">body</div>
+          <div class="foot">foot</div>
+          <div class="hp">Health:</div>
+        </div>
+      </div>
+      <div class="arenaButton">
+        <button>Accept</button>
+      </div>
     </div>
     <script src="/scripts.b71a6038.js"></script>
   </body>

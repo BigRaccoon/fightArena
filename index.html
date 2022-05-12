@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
     <title>Gladiators</title>
+    <script src="handlebars-v4.7.7.js"></script>
   </head>
   <body>
     <div class="container">
@@ -18,7 +19,7 @@
             </tr>
             <tr>
               <td class="weatherInfo">data</td>
-              <tr class="windInfo"><td>data</td></tr>
+              <td class="windInfo">data</td>
             </tr>
           </table>
         </div>
@@ -43,7 +44,12 @@
         <div id="berserk" class="fighterPhoto">
           <h3 class="name">Berserk</h3>
 
-          <img class="img" src="/imgs/berserk.jpeg" alt="No img" width="150px" />
+          <img
+            class="img"
+            src="/imgs/berserk.jpeg"
+            alt="No img"
+            width="150px"
+          />
 
           <ul>
             <li><strong>Health: * </strong></li>
@@ -67,7 +73,13 @@
         <div id="wizzard" class="fighterPhoto">
           <h3 class="name">Wizzard</h3>
 
-          <img class="img" src="/imgs/mage.png" alt="No img" width="150px"  height="150px"/>
+          <img
+            class="img"
+            src="/imgs/mage.png"
+            alt="No img"
+            width="150px"
+            height="150px"
+          />
 
           <ul>
             <li><strong>Health: **</strong></li>
@@ -78,6 +90,41 @@
       </div>
 
       <button class="mainMenuButton">Choose fighter</button>
+      <!-- ЖМЫХ АТАКА -->
+      <div class="instruction">
+        <p>
+          To fight, you need to choose the place of attack on the enemy, as well
+          as the place of protection on your fighter.
+        </p>
+      </div>
+      <div class="icons">
+        <div class="iconCharacter">
+          <img src="" alt="Your photo" />
+          <h2 class="areaName">Your name</h2>
+        </div>
+        <p>VS</p>
+        <div class="iconCharacter2">
+          <img src="" alt="other photo" />
+          <h2>Enemy</h2>
+        </div>
+      </div>
+      <div class="arenaZone">
+        <div class="yourBody">
+          <div id="pHead" class="head">head</div>
+          <div class="body">body</div>
+          <div class="foot">foot</div>
+          <div class="hp" class="hp">Health:</div>
+        </div>
+        <div class="enemyBody">
+          <div id="eHead" class="head">head</div>
+          <div class="body">body</div>
+          <div class="foot">foot</div>
+          <div class="hp" class="hp">Health:</div>
+        </div>
+      </div>
+      <div class="arenaButton">
+        <button>Accept</button>
+      </div>
     </div>
     <script src="scripts.js"></script>
   </body>

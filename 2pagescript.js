@@ -1,5 +1,6 @@
-import { playerFighter } from "./scripts";
-console.log(playerFighter);
+// import { playerFighter } from "./scripts.js";
+// console.log(playerFighter);
+
 const enemyBody = document.querySelector(".enemyBody");
 const playerBody = document.querySelector(".yourBody");
 const accept = document.querySelector(".arenaButton");
