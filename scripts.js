@@ -51,6 +51,7 @@ function shortChange(classFighter) {
   playerFighter = classFighter;
   console.log(playerFighter);
   player = new Choice("PLAYER", playerBody, playerFighter);
+  console.log(player);
 }
 console.log(player);
 function weatherInfo() {
@@ -159,7 +160,7 @@ accept.addEventListener("click", function () {
     const check = getProtectionEnemy();
     console.log("враг защищает свой " + check);
     if (playerChooseA != check) {
-      enemy.increaseHp(-1);
+      enemy.increaseHp(-1 * player.fighter.power);
     }
     checkDeath(enemy.hp, "You win!!!");
     if (enemy.hp == 0 && player.hp == 0) {

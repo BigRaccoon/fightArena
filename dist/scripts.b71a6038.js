@@ -203,6 +203,7 @@ function shortChange(classFighter) {
   playerFighter = classFighter;
   console.log(playerFighter);
   player = new Choice("PLAYER", playerBody, playerFighter);
+  console.log(player);
 }
 
 console.log(player);
@@ -325,7 +326,7 @@ accept.addEventListener("click", function () {
     console.log("враг защищает свой " + check);
 
     if (playerChooseA != check) {
-      enemy.increaseHp(-1);
+      enemy.increaseHp(-1 * player.fighter.power);
     }
 
     checkDeath(enemy.hp, "You win!!!");
@@ -397,7 +398,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51338" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54530" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
